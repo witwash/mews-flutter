@@ -124,14 +124,6 @@ class _NotificationListState extends State<_NotificationList> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) => AnimatedList(
-        key: widget._listStateKey,
-        shrinkWrap: true,
-        itemBuilder: (context, index, animation) =>
-            _buildNotification(index, animation),
-      );
-
   void _removeNotification(_NotificationModel model) {
     final index = widget._notifications.indexOf(model);
     widget._notifications.removeAt(index);
@@ -185,6 +177,14 @@ class _NotificationListState extends State<_NotificationList> {
           onDismissed: () {},
           variant: removedItem.variant,
         ),
+      );
+
+  @override
+  Widget build(BuildContext context) => AnimatedList(
+        key: widget._listStateKey,
+        shrinkWrap: true,
+        itemBuilder: (context, index, animation) =>
+            _buildNotification(index, animation),
       );
 }
 
