@@ -78,6 +78,8 @@ class OptimusNotificationManager {
         ),
       );
 
+  /// Delaying removal of overlay in case if new notification is added while
+  /// animating removal of last notification.
   void _removeOverlayEntry() {
     Future<void>.delayed(
       _animationDuration,
@@ -110,6 +112,8 @@ class _NotificationList extends StatefulWidget {
 }
 
 class _NotificationListState extends State<_NotificationList> {
+  /// Adding initial notification after the list is visible in the tree,
+  /// otherwise first notification would be displayed without animation.
   @override
   void initState() {
     super.initState();
@@ -128,19 +132,21 @@ class _NotificationListState extends State<_NotificationList> {
             _buildNotification(index, animation),
       );
 
-  void _removeNotification(int index) {
-    final _NotificationModel removedItem = widget._notifications[index];
+  void _removeNotification(_NotificationModel model) {
+    final index = widget._notifications.indexOf(model);
     widget._notifications.removeAt(index);
     widget._listStateKey.currentState?.removeItem(
       index,
-      (context, animation) => _buildRemovedNotification(removedItem, animation),
+      (context, animation) => _buildRemovedNotification(model, animation),
       duration: _animationDuration,
     );
   }
 
   Widget _buildNotification(int index, Animation<double> animation) {
     final model = widget._notifications[index];
-    return SizeTransition(
+    late Widget notification;
+
+    notification = SizeTransition(
       sizeFactor: animation,
       child: OptimusNotification(
         key: UniqueKey(),
@@ -150,12 +156,18 @@ class _NotificationListState extends State<_NotificationList> {
         link: model.link,
         onLinkPressed: model.onLinkPressed,
         onDismissed: () {
-          _removeNotification(index);
+          _removeNotification(model);
           model.onDismissed?.call();
         },
         variant: model.variant,
       ),
     );
+    Future<void>.delayed(_autoDismissDuration, () {
+      if (widget._notifications.contains(model)) {
+        _removeNotification(model);
+      }
+    });
+    return notification;
   }
 
   Widget _buildRemovedNotification(
@@ -196,3 +208,4 @@ class _NotificationModel {
 }
 
 const Duration _animationDuration = Duration(milliseconds: 500);
+const Duration _autoDismissDuration = Duration(seconds: 8);
