@@ -140,6 +140,7 @@ class _NotificationListState extends State<_NotificationList> {
 
     notification = SizeTransition(
       sizeFactor: animation,
+      axisAlignment: 1,
       child: OptimusNotification(
         key: UniqueKey(),
         title: model.title,
@@ -168,6 +169,7 @@ class _NotificationListState extends State<_NotificationList> {
   ) =>
       SizeTransition(
         sizeFactor: animation,
+        axisAlignment: 1,
         child: OptimusNotification(
           title: removedItem.title,
           body: removedItem.body,
