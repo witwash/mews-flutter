@@ -13,6 +13,7 @@ import 'package:storybook/stories/checkbox.dart';
 import 'package:storybook/stories/checkbox_group.dart';
 import 'package:storybook/stories/date_time_field.dart';
 import 'package:storybook/stories/dialog.dart';
+import 'package:storybook/stories/expansion_tile.dart';
 import 'package:storybook/stories/form/form_story.dart';
 import 'package:storybook/stories/icon.dart';
 import 'package:storybook/stories/icon_list.dart';
@@ -82,6 +83,7 @@ class MyApp extends StatelessWidget {
           stackStory,
           stepBarStory,
           badgeStory,
+          expansionTileStory,
           listTileStory,
           tabs,
           segmentedControlStory,
