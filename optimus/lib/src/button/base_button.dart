@@ -54,8 +54,7 @@ class _BaseButtonState extends State<BaseButton> with ThemeGetter {
 
   @override
   Widget build(BuildContext context) {
-    final borderRadius =
-        widget.borderRadius ?? BorderRadius.all(tokens.borderRadius100);
+    final borderRadius = BorderRadius.all(tokens.borderRadius0);
 
     return IgnorePointer(
       ignoring: widget.isLoading,
