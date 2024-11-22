@@ -92,6 +92,7 @@ class OptimusButton extends StatelessWidget {
             _ => v.toString(),
           },
         ),
+        borderRadius: BorderRadius.all(context.tokens.borderRadiusRound),
         size: size,
         isLoading: isLoading,
         variant: variant.toBaseVariant(),
